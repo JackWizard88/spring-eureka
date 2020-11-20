@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,4 +28,7 @@ public class ProductService {
         return productDto;
     };
 
+    public Optional<Product> getProductById(long id) {
+        return productRepository.findById(id);
+    }
 }

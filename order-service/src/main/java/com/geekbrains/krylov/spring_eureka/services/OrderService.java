@@ -25,6 +25,7 @@ public class OrderService {
     public void createOrder(Long firstId, Long[] ids) {
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
+        System.err.println(productRequest.getProductById(firstId));
         orderItems.add(new OrderItem(productRequest.getProductById(firstId)));
 
         if (ids != null) {
