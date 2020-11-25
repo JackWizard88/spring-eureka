@@ -19,9 +19,8 @@ public class OrderController {
     }
 
     @PutMapping
-    public void createOrder(@RequestParam Long id,
-                            @RequestParam(required = false) Long... ids) {
-        orderService.createOrder(id, ids);
+    public void createOrder(@RequestParam Long[] ids) {
+        orderService.createOrder(ids);
     }
 
 }

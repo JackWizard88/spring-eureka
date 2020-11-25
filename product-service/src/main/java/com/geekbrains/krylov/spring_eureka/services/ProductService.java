@@ -6,6 +6,7 @@ import com.geekbrains.krylov.spring_eureka.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -28,7 +29,17 @@ public class ProductService {
         return productDto;
     };
 
-    public Optional<Product> getProductById(long id) {
-        return productRepository.findById(id);
+    public Optional<ProductDTO> getProductById(Long id) {
+        return productRepository.findById(id).map(productDTOFunction);
     }
+
+    public List<ProductDTO> getProductByIds(Long... ids) {
+        List<ProductDTO> products = new ArrayList<>();
+        for (Long id : ids) {
+            products.add(productRepository.findById(id).map(productDTOFunction).get());
+        }
+
+        return products;
+    }
+
 }

@@ -8,7 +8,6 @@ import com.geekbrains.krylov.spring_eureka.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,21 +21,16 @@ public class OrderService {
         return orderRepository.findAll().stream().map(this::mapToOrderDTO).collect(Collectors.toList());
     }
 
-    public void createOrder(Long firstId, Long[] ids) {
-        Order order = new Order();
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(new OrderItem(productRequest.getProductById(firstId)));
+    public void createOrder(Long[] ids) {
 
-        if (ids != null) {
-            for (Long id : ids) {
-                orderItems.add(new OrderItem(productRequest.getProductById(id)));
-            }
-        }
+        Order order = new Order();
+        List<OrderItem> orderItems = productRequest.getProductByIds(ids).stream().map(OrderItem::new).collect(Collectors.toList());
 
         order.setItems(orderItems);
 
         double orderPrice = 0;
         for (OrderItem orderItem : orderItems) {
+            orderItem.setOrder(order);
             orderPrice += orderItem.getPrice();
         }
         order.setPrice(orderPrice);
