@@ -35,8 +35,8 @@ public class OrderItem {
     public OrderItem(ProductDTO p) {
         this.productId = p.getId();
         this.quantity = 1;
-        this.price = p.getPrice();
         this.pricePerProduct = p.getPrice();
+        this.price = p.getPrice() * this.quantity;
     }
 
 }
